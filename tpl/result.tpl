@@ -33,14 +33,14 @@
                 </tr>
               </thead>
               <tbody>
-	        #for $row in $data
-	        <tr>
-	          <td>$row[0]</td>
-	          <td>$row[1]</td>
-		  <td>$row[2]</td>
-	          <td>$row[3]</td>
-	          <td>$row[4]</td>
-	        </tr>
+                #for $row in $data
+	            <tr>
+	              <td>$row[0]</td>
+	              <td>$row[1]</td>
+		          <td>$row[2]</td>
+	              <td>$row[3]</td>
+	              <td>$row[4]</td>
+	            </tr>
                 #end for
               </tbody>
             </table>
@@ -48,6 +48,5 @@
         </div>
       </div>
     </div>
-  </div>
-</body>
+  </body>
 </html>
