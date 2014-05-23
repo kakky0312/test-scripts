@@ -2,72 +2,73 @@
 #-*- coding: utf-8 -*-
 import MySQLdb
 
-
-if __name__ == "__main__":
+def application(environ, start_response):
 
 	connector = MySQLdb.connect(host="192.168.30.10", db="personal", user="vagrant", passwd="vagrant", charset="utf8")
 	cursor = connector.cursor()
 	cursor.execute("SELECT * FROM info")
 	result = cursor.fetchall()
 
-	print 'Content-Type: text/html\n'
-	print '<html>'
-	print '<title>Hello Ptyhon</title>'
-	print '<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">'
-	print '<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">'
-	print '<link rel="stylesheet" href="//bootswatch.com/cerulean/bootstrap.min.css">'
-	print '<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>'
-	print '<body>'
-	print '<div class="navbar navbar-default">'
-	print '<div class="navbar-header">'
-	print '<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">'
-	print '<span class="icon-bar"></span>'
-	print '<span class="icon-bar"></span>'
-	print '<span class="icon-bar"></span>'
-	print '</button>'
-	print '<a class="navbar-brand" href="#">Wakamonog Sample</a>'
-	print '</div>'
-	print '</div>'
-	print '<div class="container">'
-	print '<div class="row">'
-	print '<div class="panel panel-primary">'
-	print '<div class="panel-heading">Loading result</div>'
-	print '<div class="panel-body">'
-	print '<table class="table table-striped table-hover">'
-	print '<thead>'
-	print '<tr>'
-	print '<th>#</th>'
-	print '<th>Name</th>'
-	print '<th>Sex</th>'
-	print '<th>Mail</th>'
-	print '<th>Birthday</th>'
-	print '</tr>'
-	print '</thead>'
-	print '<tbody>'
+	start_response('200 OK', [('Content-Type', 'text/html')])
+	content = '<html>'
+	content += '<title>Hello Ptyhon</title>'
+	content += '<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">'
+	content += '<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">'
+	content += '<link rel="stylesheet" href="//bootswatch.com/cerulean/bootstrap.min.css">'
+	content += '<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>'
+	content += '<body>'
+	content += '<div class="navbar navbar-default">'
+	content += '<div class="navbar-header">'
+	content += '<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">'
+	content += '<span class="icon-bar"></span>'
+	content += '<span class="icon-bar"></span>'
+	content += '<span class="icon-bar"></span>'
+	content += '</button>'
+	content += '<a class="navbar-brand" href="#">Wakamonog Sample</a>'
+	content += '</div>'
+	content += '</div>'
+	content += '<div class="container">'
+	content += '<div class="row">'
+	content += '<div class="panel panel-primary">'
+	content += '<div class="panel-heading">Loading result</div>'
+	content += '<div class="panel-body">'
+	content += '<table class="table table-striped table-hover">'
+	content += '<thead>'
+	content += '<tr>'
+	content += '<th>#</th>'
+	content += '<th>Name</th>'
+	content += '<th>Sex</th>'
+	content += '<th>Mail</th>'
+	content += '<th>Birthday</th>'
+	content += '</tr>'
+	content += '</thead>'
+	content += '<tbody>'
 
 	for row in result:
-		print '<tr>'
-		print "<td>" + str(row[0]) + "</td>"
-		print "<td>" + str(row[2]) + "</td>"
+		content += '<tr>'
+		content += '<td>' + str(row[0]) + '</td>'
+		content += '<td>' + str(row[2]) + '</td>'
 
 		if str(row[3]) == "M":
-			print '<td>Man</td>'
+			content += '<td>Man</td>'
 		else:
-			print '<td>Woman</td>'
+			content += '<td>Woman</td>'
 			
-		print "<td>" + str(row[4]) + "</td>"
-		print "<td>" + str(row[5]) + "</td>"
-		print '</tr>'
+		content += '<td>' + str(row[4]) + '</td>'
+		content += '<td>' + str(row[5]) + '</td>'
+		content += '</tr>'
 
-	print '</tbody>'
-	print '</table>'
-	print '</div>'
-	print '</div>'
-	print '</div>'
-	print '</div>'
-	print '</div>'
-	print '</body>'
-	print '</html>'
+	content += '</tbody>'
+	content += '</table>'
+	content += '</div>'
+	content += '</div>'
+	content += '</div>'
+	content += '</div>'
+	content += '</div>'
+	content += '</body>'
+	content += '</html>'
 
 	cursor.close()
 	connector.close()
+
+	return content
